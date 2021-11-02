@@ -9,13 +9,13 @@ const App = () => {
   ]);
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
+  const [searchFilter, setSearchFilter] = useState('');
 
   const handleNameChange = (event) => {
     setNewName(event.target.value);
   };
 
   const handleNumberChange = (event) => {
-    console.log(typeof event.target.value);
     setNewNumber(event.target.value);
   };
 
@@ -40,10 +40,22 @@ const App = () => {
     setNewNumber('');
   };
 
+  const handleSearchInput = (event) => {
+    setSearchFilter(event.target.value);
+    const regex = new RegExp(searchFilter, 'gi');
+    const filteredPersons = () =>
+      persons.filter((person) => person.name.match(regex));
+    setPersons(filteredPersons);
+  };
+
   return (
     <div>
-      <h2>Phonebook</h2>
+      <h1>Phonebook</h1>
+      <div>
+        Search: <input onChange={handleSearchInput} value={searchFilter} />
+      </div>
       <form onSubmit={handleInputSubmit}>
+        <h3>Add New Contact</h3>
         <div>
           Name: <input onChange={handleNameChange} value={newName} required />
         </div>
@@ -57,7 +69,7 @@ const App = () => {
           <button type="submit">Add</button>
         </div>
       </form>
-      <h2>Numbers</h2>
+      <h2>Your Contacts</h2>
       {persons.map((person) => (
         <p>
           {person.name} - {person.number}
