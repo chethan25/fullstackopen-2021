@@ -41,6 +41,7 @@ const Content = ({ parts }) => {
       {parts.map((part) => (
         <Part part={part}></Part>
       ))}
+      <Total parts={parts}></Total>
     </>
   );
 };
@@ -49,6 +50,15 @@ const Part = ({ part }) => {
   return (
     <p>
       {part.name} {part.exercises}
+    </p>
+  );
+};
+
+const Total = ({ parts }) => {
+  return (
+    <p>
+      Total of {parts.reduce((total, part) => total + part.exercises, 0)}{' '}
+      exercises
     </p>
   );
 };
