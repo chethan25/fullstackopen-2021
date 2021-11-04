@@ -20,9 +20,14 @@ const update = async (id, newObject) => {
   return response.data;
 };
 
+const remove = (id) => {
+  axios.delete(`${baseUrl}/${id}`);
+};
+
 /* eslint import/no-anonymous-default-export: [2, {"allowObject": true}] */
 export default {
   getAll,
   create,
   update,
+  remove,
 };
