@@ -11,7 +11,7 @@ const App = () => {
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
   const [searchFilter, setSearchFilter] = useState('');
-  const [successMessage, setSuccessMessage] = useState();
+  const [message, setMessage] = useState(null);
 
   useEffect(() => {
     contactService
@@ -55,9 +55,18 @@ const App = () => {
                 person.id !== updatedPerson.id ? person : returnedPerson
               )
             );
-            setSuccessMessage(`Updated ${newName}'s number`);
+            setMessage(`Updated ${newName}'s number`);
             setTimeout(() => {
-              setSuccessMessage(null);
+              setMessage(null);
+            }, 3000);
+          })
+          .catch((error) => {
+            setMessage(
+              `Information of ${newName} has already been removed from server`
+            );
+            setPersons(persons.filter((p) => p.id !== updatedPerson.id));
+            setTimeout(() => {
+              setMessage(null);
             }, 3000);
           });
       } else {
@@ -74,9 +83,9 @@ const App = () => {
       setPersons(persons.concat(returnedPerson));
       setNewName('');
       setNewNumber('');
-      setSuccessMessage(`Added ${newName} to your contact list`);
+      setMessage(`Added ${newName} to your contact list`);
       setTimeout(() => {
-        setSuccessMessage(null);
+        setMessage(null);
       }, 3000);
     });
   };
@@ -100,7 +109,7 @@ const App = () => {
   return (
     <div>
       <h1>Phonebook</h1>
-      <Notification message={successMessage} />
+      <Notification message={message} />
       <Filter
         handleSearchInput={handleSearchInput}
         searchFilter={searchFilter}

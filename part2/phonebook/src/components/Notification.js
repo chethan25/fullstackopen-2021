@@ -1,9 +1,13 @@
 const Notification = ({ message }) => {
-  if (message == null) {
+  if (message === null) {
     return null;
   }
 
-  return <div className="success">{message}</div>;
+  if (message.includes('removed')) {
+    return <div className="error">{message}</div>;
+  } else {
+    return <div className="success">{message}</div>;
+  }
 };
 
 export default Notification;
